@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagement", "StoreMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagement.Tests", "StoreManagement.Tests\StoreManagement.Tests.csproj", "{0B30EB10-9B8B-4FDD-8F0C-8654614CD92F}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Stores_db", "Stores_db\Stores_db.sqlproj", "{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{0B30EB10-9B8B-4FDD-8F0C-8654614CD92F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B30EB10-9B8B-4FDD-8F0C-8654614CD92F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B30EB10-9B8B-4FDD-8F0C-8654614CD92F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
