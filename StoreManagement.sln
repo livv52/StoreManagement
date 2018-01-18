@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagement.Tests", "St
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Stores_db", "Stores_db\Stores_db.sqlproj", "{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{00476D15-38EB-455B-BF41-9270467AB415}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0893D24-BCCF-4B44-BBBE-4B3F95EFDA76}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{00476D15-38EB-455B-BF41-9270467AB415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00476D15-38EB-455B-BF41-9270467AB415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00476D15-38EB-455B-BF41-9270467AB415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00476D15-38EB-455B-BF41-9270467AB415}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
