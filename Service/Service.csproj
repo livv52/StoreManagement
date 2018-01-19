@@ -40,9 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\DistrictDTO.cs" />
+    <Compile Include="Entities\District.cs" />
+    <Compile Include="Entities\DistrictSalesPerson.cs" />
+    <Compile Include="Entities\Salesperson.cs" />
     <Compile Include="Entities\Store.cs" />
+    <Compile Include="Interfaces\IDistrictRepository.cs" />
+    <Compile Include="Interfaces\ISalespersonRepository.cs" />
     <Compile Include="Interfaces\IStoreRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\DistrictRepository.cs" />
+    <Compile Include="Repositories\SalespersonRepository.cs" />
     <Compile Include="Repositories\StoreRepository.cs" />
   </ItemGroup>
   <ItemGroup />
