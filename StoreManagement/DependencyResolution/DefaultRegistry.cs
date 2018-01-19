@@ -32,7 +32,9 @@ namespace StoreManagement.DependencyResolution {
                 });
            
                 For<IStoreRepository>().Use<StoreRepository>();
-            
+                For<IDistrictRepository>().Use<DistrictRepository>();
+                For<ISalespersonRepository>().Use<SalespersonRepository>();
+
         }
 
         #endregion

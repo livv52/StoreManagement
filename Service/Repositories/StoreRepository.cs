@@ -10,7 +10,8 @@ using System.Data.SqlClient;
 namespace Service.Repositories
 {
     public class StoreRepository : IStoreRepository
-    {   private string _connectionString = "data source=.\\SQLEXPRESS;  Initial Catalog = Stores_db; integrated security=True";
+    {
+        private string _connectionString = "data source=.\\SQLEXPRESS;  Initial Catalog = Stores_db; integrated security=True";
 
         public void Delete(int id)
         {
@@ -22,7 +23,7 @@ namespace Service.Repositories
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
-            
+
         }
 
         public Store Get(int id)
@@ -31,7 +32,7 @@ namespace Service.Repositories
             {
                 string Command = "SELECT * from Store where StoreId = @id";
                 var cmd = new SqlCommand(Command, con);
-                cmd.Parameters.AddWithValue("@id",id);
+                cmd.Parameters.AddWithValue("@id", id);
                 con.Open();
                 var store = new Store();
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -42,25 +43,27 @@ namespace Service.Repositories
                         {
                             store.StoreId = reader.GetInt32(0);
                             store.Name = reader.GetString(1);
-                            
+                            store.DistrictId = reader.GetInt32(2);
+
                         }
                     }
 
                 }
                 return store;
             }
-            
+
 
         }
 
         public Store Insert(Store store)
         {
-            
+
             using (var con = new SqlConnection(_connectionString))
             {
-                string Command = "INSERT INTO Store (Name) VALUES (@name)";
+                string Command = "INSERT INTO Store (Name,DistrictId) VALUES (@name,@districtid)";
                 var cmd = new SqlCommand(Command, con);
                 cmd.Parameters.AddWithValue("@name", store.Name);
+                cmd.Parameters.AddWithValue("@districtid", store.DistrictId);
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -78,19 +81,22 @@ namespace Service.Repositories
                 var storeList = new List<Store>();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while(reader.HasRows)
+                    while (reader.HasRows)
                     {
-                        var store = new Store();
+                       
                         while (reader.Read())
                         {
+                            var store = new Store();
                             store.StoreId = reader.GetInt32(0);
                             store.Name = reader.GetString(1);
+                            store.DistrictId = reader.GetInt32(2);
+                            storeList.Add(store);
 
                         }
-                        storeList.Add(store);
+                       
                         reader.NextResult();
                     }
-                    
+
 
                 }
                 return storeList;
@@ -101,16 +107,18 @@ namespace Service.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string Command = "UPDATE Store SET Name = @name WHERE StoreId = @id";
+                string Command = "UPDATE Store SET Name = @name,DistrictId = @districtid WHERE StoreId = @id";
                 var cmd = new SqlCommand(Command, con);
                 cmd.Parameters.AddWithValue("@name", store.Name);
+                cmd.Parameters.AddWithValue("@districtid", store.DistrictId);
                 cmd.Parameters.AddWithValue("@id", store.StoreId);
-                con.Open();     
+                con.Open();
                 bool result = false;
                 if (cmd.ExecuteNonQuery() > 0) result = true;
                 return result;
             }
-          
+
         }
+
     }
 }

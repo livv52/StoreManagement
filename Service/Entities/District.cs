@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Service.Entities
 {
-    public class Store
+    public class District
     {
-        public Store()
+        public District()
         {
 
         }
-        public int StoreId { get; set; }
-        public string Name { get; set; }
         public int DistrictId { get; set; }
-
+        public string Name { get; set; }
+        
     }
+    
 }
