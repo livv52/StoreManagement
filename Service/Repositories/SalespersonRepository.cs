@@ -110,7 +110,7 @@ namespace Service.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string Command = "UPDATE Salesperson SET Firstname = @firstname, Lastname = @lastname, Description = @description, Position = @positon WHERE SPId = @id";
+                string Command = "UPDATE Salesperson SET Firstname = @firstname, Lastname = @lastname, Description = @description, Position = @position WHERE SPId = @id";
                 var cmd = new SqlCommand(Command, con);
                 cmd.Parameters.AddWithValue("@firstname", salesperson.Firstname);
                 cmd.Parameters.AddWithValue("@lastname", salesperson.Lastname);
