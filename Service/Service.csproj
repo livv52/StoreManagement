@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\DistrictDTO.cs" />
+    <Compile Include="DTOs\SalesPersonDistrictDTO.cs" />
+    <Compile Include="DTOs\SalesPersonDTO.cs" />
     <Compile Include="Entities\District.cs" />
     <Compile Include="Entities\DistrictSalesPerson.cs" />
     <Compile Include="Entities\Salesperson.cs" />

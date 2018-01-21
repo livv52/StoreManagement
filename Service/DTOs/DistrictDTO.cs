@@ -11,7 +11,7 @@ namespace Service.DTOs
     {
             public int DistrictId { get; set; }
             public string Name { get; set; }
-            public List<Salesperson> SalesPersons { get; set; }
+            public List<SalesPersonDTO> SalesPersons { get; set;}
 
     }
 }

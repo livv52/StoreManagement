@@ -69,5 +69,17 @@ namespace StoreManagement.Controllers
             _salespersonRepo.Delete(id);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("districts/{id}")]
+        public IHttpActionResult GetDistricts(int id)
+        {
+            var salespersonList = _salespersonRepo.GetDistricts(id);
+            if (salespersonList == null)
+            {
+                return NotFound();
+            }
+            return Ok(salespersonList);
+        }
     }
 }

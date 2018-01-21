@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Entities
+namespace Service.DTOs
 {
-    public class DistrictSalesPerson
+    public class SalesPersonDistrictDTO
     {
-        public DistrictSalesPerson()
-        {
-
-        }
-        public int DistrictSalesPersonId { get; set; }
-        public int SPId { get; set; }
+        public string DistrictName { get; set; }
         public int DistrictId { get; set; }
+        public int DistrictSalespersonId { get; set; }
         public string Position { get; set; }
+
+       
     }
 }

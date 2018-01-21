@@ -66,7 +66,7 @@ namespace Service.Repositories
                 cmd.Parameters.AddWithValue("@name", district.Name);
                 con.Open();
                 newDistrictId = (int)cmd.ExecuteScalar();
-                Command = "INSERT INTO DistrictSalesperson (SPId,DistrictId) VALUES (@SPId,@DistrictId)";
+                Command = "INSERT INTO DistrictSalesperson (SPId,DistrictId,Position) VALUES (@SPId,@DistrictId,@Position)";
 
                 foreach (var item in districtDto.SalesPersons)
                 {
@@ -74,6 +74,7 @@ namespace Service.Repositories
                     cmd = new SqlCommand(Command, con);
                     cmd.Parameters.AddWithValue("@SPId", item.SPId);
                     cmd.Parameters.AddWithValue("@DistrictId", newDistrictId);
+                    cmd.Parameters.AddWithValue("@Position", item.Position);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -161,15 +162,15 @@ namespace Service.Repositories
 
         }
 
-        public List<Salesperson> GetSalesperson(int districtId)
+        public List<SalesPersonDTO> GetSalesperson(int districtId)
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string Command = "SELECT S.SPId, S.Firstname,S.Lastname,S.Description,S.Position FROM Salesperson AS S, DistrictSalesperson AS DS, District AS D WHERE DS.DistrictId = @districtId AND D.DistrictId = DS.DistrictId AND S.SPId = DS.SPId";
+                string Command = "SELECT S.SPId, S.Firstname,S.Lastname,S.Description, DS.Position FROM Salesperson AS S, DistrictSalesperson AS DS, District AS D WHERE DS.DistrictId = @districtId AND D.DistrictId = DS.DistrictId AND S.SPId = DS.SPId";
                 var cmd = new SqlCommand(Command, con);
                 cmd.Parameters.AddWithValue("@districtId", districtId);
                 con.Open();
-                var salesPersonList = new List<Salesperson>();
+                var salesPersonList = new List<SalesPersonDTO>();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.HasRows)
@@ -177,12 +178,13 @@ namespace Service.Repositories
 
                         while (reader.Read())
                         {
-                            var salesPerson = new Salesperson();
+                            var salesPerson = new SalesPersonDTO();
                             salesPerson.SPId = reader.GetInt32(0);
                             salesPerson.Firstname = reader.GetString(1);
                             salesPerson.Lastname = reader.GetString(2);
                             salesPerson.Description = reader.GetString(3);
                             salesPerson.Position = reader.GetString(4);
+
                             salesPersonList.Add(salesPerson);
 
                         }

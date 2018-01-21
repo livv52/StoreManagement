@@ -16,7 +16,7 @@ namespace Service.Interfaces
         void Delete(int id);
         List<District> List();
         List<Store> GetStores(int districtId);
-        List<Salesperson> GetSalesperson(int districtId);
+        List<SalesPersonDTO> GetSalesperson(int districtId);
         bool AddSalesPerson(DistrictSalesPerson districtSalesPerson);
         bool DeleteSalesPerson(int id);
     }

@@ -1,4 +1,5 @@
-﻿using Service.Entities;
+﻿using Service.DTOs;
+using Service.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace Service.Interfaces
         bool Update(Salesperson salesperson);
         void Delete(int id);
         List<Salesperson> List();
+        List<SalesPersonDistrictDTO> GetDistricts(int id);
+
     }
 }
