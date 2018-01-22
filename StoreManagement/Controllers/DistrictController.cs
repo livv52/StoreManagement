@@ -56,7 +56,7 @@ namespace StoreManagement.Controllers
         }
         [HttpPut]
         [Route("update")]
-        public IHttpActionResult Update(District district)
+        public IHttpActionResult Update(DistrictDTO district)
         {
             var result = _districtRepo.Update(district);
             return Ok(result);

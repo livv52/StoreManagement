@@ -12,7 +12,7 @@ namespace Service.Interfaces
     {
         District Insert(DistrictDTO districtDto);
         District Get(int id);
-        bool Update(District district);
+        bool Update(DistrictDTO districtDto);
         void Delete(int id);
         List<District> List();
         List<Store> GetStores(int districtId);

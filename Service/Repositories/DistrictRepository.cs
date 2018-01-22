@@ -16,6 +16,19 @@ namespace Service.Repositories
 
         public void Delete(int id)
         {
+            var sPs = GetSalesperson(id);
+            foreach(var sp in sPs)
+            {
+                using (var con = new SqlConnection(_connectionString))
+                {
+                    string Command = "DELETE FROM  DistrictSalesperson  WHERE DistrictSalespersonId = @id";
+                    var cmd = new SqlCommand(Command, con);
+                    cmd.Parameters.AddWithValue("@id", sp.DistrictSalespersonId);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
             using (var con = new SqlConnection(_connectionString))
             {
                 string Command = "DELETE FROM District WHERE DistrictId = @id";
@@ -113,25 +126,88 @@ namespace Service.Repositories
             }
         }
 
-        public bool Update(District district)
+        public bool Update(DistrictDTO districtDto)
         {
+            var existingSPs = GetSalesperson(districtDto.DistrictId);
+            updateSP(districtDto.SalesPersons, existingSPs, districtDto.DistrictId);
+
             using (var con = new SqlConnection(_connectionString))
             {
                 string Command = "UPDATE District SET Name = @name WHERE DistrictId = @id";
                 var cmd = new SqlCommand(Command, con);
-                cmd.Parameters.AddWithValue("@name", district.Name);
-                cmd.Parameters.AddWithValue("@id", district.DistrictId);
+                cmd.Parameters.AddWithValue("@name", districtDto.Name);
+                cmd.Parameters.AddWithValue("@id", districtDto.DistrictId);
                 con.Open();
                 bool result = false;
                 if (cmd.ExecuteNonQuery() > 0) result = true;
                 return result;
             }
         }
+        private void updateSP (List<SalesPersonDTO> updatedSPs, List<SalesPersonDTO> existingSPs, int districtId)
+        {
+            foreach (var eSP in existingSPs)
+            {
+                if (updatedSPs.All(p => p.DistrictSalespersonId != eSP.DistrictSalespersonId))
+                {
+                    //REMOVE EXISTING SP
+                    using (var con = new SqlConnection(_connectionString))
+                    {
+                        string Command = "DELETE FROM  DistrictSalesperson  WHERE DistrictSalespersonId = @id";
+                        var cmd = new SqlCommand(Command, con);
+                        cmd.Parameters.AddWithValue("@id", eSP.DistrictSalespersonId);
+                        con.Open();
+                         cmd.ExecuteNonQuery();
+                        
+                    }
+                }
+
+            }
+            foreach(var uSP in updatedSPs)
+            {
+                if(uSP.DistrictSalespersonId == 0)
+                {
+                    //add 
+                    using (var con = new SqlConnection(_connectionString))
+                    {
+                        string Command = "INSERT INTO DistrictSalesPerson (SPId,DistrictId,Position) VALUES (@spId,@districtId,@position)";
+                        var cmd = new SqlCommand(Command, con);
+                        cmd.Parameters.AddWithValue("@spId", uSP.SPId);
+                        cmd.Parameters.AddWithValue("@districtId", districtId);
+                        cmd.Parameters.AddWithValue("@position", uSP.Position);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                    }
+                }
+                else
+                {
+                    var existingChild = existingSPs.SingleOrDefault(e => e.DistrictSalespersonId == uSP.DistrictSalespersonId);
+                    if(existingChild != null)
+                    {
+                        //update child 
+                        using (var con = new SqlConnection(_connectionString))
+                        {
+                            string Command = "UPDATE DistrictSalesPerson SET SPId = @spid, DistrictId = @did, Position = @position WHERE DistrictSalespersonId = @id";
+                            var cmd = new SqlCommand(Command, con);
+                            cmd.Parameters.AddWithValue("@spid", uSP.SPId);
+                            cmd.Parameters.AddWithValue("@did", districtId);
+                            cmd.Parameters.AddWithValue("@position", uSP.Position);
+                            cmd.Parameters.AddWithValue("@id", uSP.DistrictSalespersonId);
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                }
+            }
+
+        }
 
         public List<Store> GetStores(int districtId)
         {
             using (var con = new SqlConnection(_connectionString))
             {
+
                 string Command = "SELECT Store.StoreId, Store.Name,Store.DistrictId FROM Store LEFT JOIN District ON  Store.DistrictId = District.DistrictId WHERE District.DistrictId = @districtId";
                 var cmd = new SqlCommand(Command, con);
                 cmd.Parameters.AddWithValue("@districtId", districtId);
@@ -166,7 +242,7 @@ namespace Service.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string Command = "SELECT S.SPId, S.Firstname,S.Lastname,S.Description, DS.Position FROM Salesperson AS S, DistrictSalesperson AS DS, District AS D WHERE DS.DistrictId = @districtId AND D.DistrictId = DS.DistrictId AND S.SPId = DS.SPId";
+                string Command = "SELECT S.SPId, S.Firstname,S.Lastname,S.Description, DS.Position, DS.DistrictSalespersonId FROM Salesperson AS S, DistrictSalesperson AS DS, District AS D WHERE DS.DistrictId = @districtId AND D.DistrictId = DS.DistrictId AND S.SPId = DS.SPId";
                 var cmd = new SqlCommand(Command, con);
                 cmd.Parameters.AddWithValue("@districtId", districtId);
                 con.Open();
@@ -184,6 +260,7 @@ namespace Service.Repositories
                             salesPerson.Lastname = reader.GetString(2);
                             salesPerson.Description = reader.GetString(3);
                             salesPerson.Position = reader.GetString(4);
+                            salesPerson.DistrictSalespersonId = reader.GetInt32(5);
 
                             salesPersonList.Add(salesPerson);
 

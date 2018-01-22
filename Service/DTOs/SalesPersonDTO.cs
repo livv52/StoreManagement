@@ -14,5 +14,6 @@ namespace Service.DTOs
         public string Lastname { get; set; }
         public string Description { get; set; }
         public string Position { get; set; }
+        public int DistrictSalespersonId { get; set;}
     }
 }
